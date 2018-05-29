@@ -5,6 +5,18 @@
   "scripts": {
     "test": "karma start ClientApp/test/karma.conf.js"
   },
+  "dependencies": {
+    "@angular/common": "~6.0.0",
+    "@angular/compiler": "~6.0.0",
+    "@angular/core": "~6.0.0",
+    "@angular/forms": "~6.0.0",
+    "@angular/platform-browser": "~6.0.0",
+    "@angular/platform-browser-dynamic": "~6.0.0",
+    "@angular/router": "~6.0.0",
+    "core-js": "^2.5.6",
+    "rxjs": "^6.1.0",
+    "zone.js": "^0.8.26"
+  },
   "devDependencies": {
     "@angular/animations": "4.2.5",
     "@angular/common": "4.2.5",
@@ -24,7 +36,7 @@
     "angular2-router-loader": "0.3.5",
     "angular2-template-loader": "0.6.2",
     "aspnet-prerendering": "^3.0.1",
-    "aspnet-webpack": "^2.0.1",
+    "aspnet-webpack": "^2.0.3",
     "awesome-typescript-loader": "3.2.1",
     "bootstrap": "3.3.7",
     "chai": "4.0.2",
@@ -49,13 +61,13 @@
     "preboot": "4.5.2",
     "raw-loader": "0.5.1",
     "reflect-metadata": "0.1.10",
-    "rxjs": "5.4.2",
     "style-loader": "0.18.2",
     "to-string-loader": "1.1.5",
-    "typescript": "2.4.1",
+    "typescript": "^2.8.3",
     "url-loader": "0.5.9",
-    "webpack": "2.5.1",
-    "webpack-hot-middleware": "2.18.2",
+    "webpack": "^4.8.1",
+    "webpack-cli": "^2.1.2",
+    "webpack-hot-middleware": "^2.22.1",
     "webpack-merge": "4.1.0",
     "zone.js": "0.8.12"
   }
