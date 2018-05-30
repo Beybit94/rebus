@@ -1,84 +1,48 @@
-const path = require('path');
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const AotPlugin = require('@ngtools/webpack').AotPlugin;
-const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
-
-module.exports = (env) => {
-    // Configuration in common to both client-side and server-side bundles
-    const isDevBuild = !(env && env.prod);
-    const sharedConfig = {
-        stats: { modules: false },
-        context: __dirname,
-        resolve: { extensions: [ '.js', '.ts' ] },
-        output: {
-            filename: '[name].js',
-            publicPath: 'dist/' // Webpack dev middleware, if enabled, handles requests for this URL prefix
-        },
-        module: {
-            rules: [
-                { test: /\.ts$/, use: isDevBuild ? ['awesome-typescript-loader?silent=true', 'angular2-template-loader', 'angular2-router-loader'] : '@ngtools/webpack' },
-                { test: /\.html$/, use: 'html-loader?minimize=false' },
-                { test: /\.css$/, use: [ 'to-string-loader', isDevBuild ? 'css-loader' : 'css-loader?minimize' ] },
-                { test: /\.(png|jpg|jpeg|gif|svg)$/, use: 'url-loader?limit=25000' }
-            ]
-        },
-        plugins: [new CheckerPlugin()]
-    };
-
-    // Configuration for client-side bundle suitable for running in browsers
-    const clientBundleOutputDir = './wwwroot/dist';
-    const clientBundleConfig = merge(sharedConfig, {
-        entry: { 'main-client': './ClientApp/boot.browser.ts' },
-        output: { path: path.join(__dirname, clientBundleOutputDir) },
-        plugins: [
-            new webpack.DllReferencePlugin({
-                context: __dirname,
-                manifest: require('./wwwroot/dist/vendor-manifest.json')
-            })
-        ].concat(isDevBuild ? [
-            // Plugins that apply in development builds only
-            new webpack.SourceMapDevToolPlugin({
-                filename: '[file].map', // Remove this line if you prefer inline source maps
-                moduleFilenameTemplate: path.relative(clientBundleOutputDir, '[resourcePath]') // Point sourcemap entries to the original file locations on disk
-            })
-        ] : [
-            // Plugins that apply in production builds only
-            new webpack.optimize.UglifyJsPlugin(),
-            new AotPlugin({
-                tsConfigPath: './tsconfig.json',
-                entryModule: path.join(__dirname, 'ClientApp/app/app.browser.module#AppModule'),
-                exclude: ['./**/*.server.ts']
-            })
-        ])
-    });
-
-    // Configuration for server-side (prerendering) bundle suitable for running in Node
-    const serverBundleConfig = merge(sharedConfig, {
-        resolve: { mainFields: ['main'] },
-        entry: { 'main-server': './ClientApp/boot.server.ts' },
-        plugins: [
-            new webpack.DllReferencePlugin({
-                context: __dirname,
-                manifest: require('./ClientApp/dist/vendor-manifest.json'),
-                sourceType: 'commonjs2',
-                name: './vendor'
-            })
-        ].concat(isDevBuild ? [] : [
-            // Plugins that apply in production builds only
-            new AotPlugin({
-                tsConfigPath: './tsconfig.json',
-                entryModule: path.join(__dirname, 'ClientApp/app/app.server.module#AppModule'),
-                exclude: ['./**/*.browser.ts']
-            })
-        ]),
-        output: {
-            libraryTarget: 'commonjs',
-            path: path.join(__dirname, './ClientApp/dist')
-        },
-        target: 'node',
-        devtool: 'inline-source-map'
-    });
-
-    return [clientBundleConfig, serverBundleConfig];
-};
+﻿var path = require('path');
+var webpack = require('webpack');
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin'); // плагин минимизации
+module.exports = {
+    //mode: 'development',
+    mode: 'none',
+    entry: {
+        'polyfills': './ClientApp/polyfills.ts',
+        'app': './ClientApp/main.ts'
+    },
+    output: {
+        path: path.resolve(__dirname, './wwwroot/dist'),     // путь к каталогу выходных файлов - папка public
+        publicPath: '/dist/',
+        filename: "[name].js"       // название создаваемого файла
+    },
+    resolve: {
+        extensions: ['.ts', '.js']
+    },
+    module: {
+        rules: [   //загрузчик для ts
+            {
+                test: /\.ts$/, // определяем тип файлов
+                use: [
+                    {
+                        loader: 'awesome-typescript-loader',
+                        options: { configFileName: path.resolve(__dirname, 'tsconfig.json') }
+                    },
+                    'angular2-template-loader'
+                ]
+            }, {
+                test: /\.html$/,
+                loader: 'html-loader'
+            }, {
+                test: /\.css$/,
+                include: path.resolve(__dirname, 'ClientApp/app'),
+                loader: 'raw-loader'
+            }
+        ]
+    },
+    plugins: [
+        new webpack.ContextReplacementPlugin(
+            /angular(\\|\/)core/,
+            path.resolve(__dirname, 'ClientApp'), // каталог с исходными файлами
+            {} // карта маршрутов
+        ),
+        new UglifyJSPlugin()
+    ]
+}

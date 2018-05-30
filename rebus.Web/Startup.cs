@@ -1,10 +1,12 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,21 +18,22 @@ namespace rebus.Web
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container.
+        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper();
             services.AddMvc();
+
             services.AddTransient<IUnitOfWork>(context =>
             {
-                var unitOfWork = new UnitOfWork("Data Source=den1.mssql4.gear.host,1433;Initial Catalog=rebus;Persist Security Info=False;User ID=rebus;Password=123456_Ab;");
+                var unitOfWork = new UnitOfWork(Configuration.GetConnectionString("prod"));
                 unitOfWork.Init();
                 return unitOfWork;
             });
@@ -48,27 +51,20 @@ namespace rebus.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                // добавляем сборку через webpack
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
                 {
                     HotModuleReplacement = true
                 });
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
 
+            app.UseDefaultFiles();
             app.UseStaticFiles();
-
-            app.UseMvc(routes =>
+            app.UseMvc();
+            app.Run(async (context) =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-
-                routes.MapSpaFallbackRoute(
-                    name: "spa-fallback",
-                    defaults: new { controller = "Home", action = "Index" });
+                context.Response.ContentType = "text/html";
+                await context.Response.SendFileAsync(Path.Combine(env.WebRootPath, "index.html"));
             });
         }
     }
