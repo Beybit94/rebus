@@ -11,5 +11,6 @@ namespace rebus.DAL.Model
         public string Img { get; set; }
         public string Answer { get; set; }
 
+        public long LevelId { get; set; }
     }
 }

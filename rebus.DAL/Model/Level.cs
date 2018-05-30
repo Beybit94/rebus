@@ -8,8 +8,8 @@ namespace rebus.DAL.Model
     [Table("Levels")]
     public class Level:Entity
     {
-        public string name { get; set; }
-        public bool isPro { get; set; }
+        public string Name { get; set; }
+        public bool IsPro { get; set; }
 
         [NotMapped]
         public List<Rebus> Rebuses { get; set; }

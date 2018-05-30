@@ -6,6 +6,7 @@ using rebus.DAL.Queries;
 using rebus.DAL.Queries.Rebus;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
@@ -19,7 +20,9 @@ namespace rebus.DAL.Repositories
 
         public override Rebus Get(long id)
         {
-            throw new NotImplementedException();
+            if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
+            var entity = UnitOfWork.Session.QuerySingleOrDefault<Rebus>(@"SELECT TOP 1 * FROM Rebuses WHERE id = @id", new { id });
+            return entity;
         }
 
         public override List<Rebus> List(ListQuery listQuery)
@@ -38,17 +41,50 @@ namespace rebus.DAL.Repositories
 
         public override void Insert(Rebus entity)
         {
-            throw new NotImplementedException();
+            using (var transaction = UnitOfWork.BeginTransaction())
+            {
+                try
+                {
+                    entity.ID = UnitOfWork.Session.QuerySingleOrDefault<long>(@"
+INSERT INTO Rebuses ( id, img, answer, levelid )
+VALUES ( @ID, @Img, @Asnwer, @LevelId )
+SELECT SCOPE_IDENTITY()", entity, UnitOfWork.Transaction);
+
+                    transaction.Commit();
+                }
+                catch (SqlException e)
+                {
+                    if (e.Number == 2627)
+                    {
+                        throw new DuplicateWaitObjectException();
+                    }
+
+                    throw;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
         }
 
         public override void Update(Rebus entity)
         {
-            throw new NotImplementedException();
+            UnitOfWork.Session.Execute(@"
+UPDATE Rebuses
+SET img = @Img, answer = @Asnwer, levelid = @LevelId
+WHERE id = @ID", entity, UnitOfWork.Transaction);
+
         }
 
         public override void Delete(long id)
         {
-            throw new NotImplementedException();
+            using (var transaction = UnitOfWork.BeginTransaction())
+            {
+                UnitOfWork.Session.Execute(@"DELETE * FROM Rebuses WHERE id = @id", new { id }, UnitOfWork.Transaction);
+
+                transaction.Commit();
+            }
         }
 
         public override int Count(ListQuery listQuery)
