@@ -2,14 +2,20 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
+
 using AutoMapper;
+using NSwag.AspNetCore;
+using NJsonSchema;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 using rebus.Business.Manager;
 using rebus.DAL.Access;
 using rebus.DAL.Repositories;
@@ -60,6 +66,11 @@ namespace rebus.Web
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            // Enable the Swagger UI middleware and the Swagger generator
+            app.UseSwaggerUi(typeof(Startup).GetTypeInfo().Assembly, settings =>
+            {
+                settings.GeneratorSettings.DefaultPropertyNameHandling = PropertyNameHandling.CamelCase;
+            });
             app.UseMvc();
             app.Run(async (context) =>
             {

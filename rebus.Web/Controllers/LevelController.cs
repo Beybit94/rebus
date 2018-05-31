@@ -21,9 +21,70 @@ namespace rebus.Web.Controllers
             _levelManager = levelManager;
         }
 
-        public ListModel<LevelModel> Get(LevelListQueryModel query)
+        public IActionResult Get(LevelListQueryModel query)
         {
-            return _levelManager.List(query);
+            try
+            {
+                return Json(_levelManager.List(query));
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
+        }
+
+        public IActionResult Get(long id)
+        {
+            try
+            {
+                return Json(_levelManager.Get(id));
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
+        }
+
+        [HttpPut]
+        public IActionResult Edit([FromBody]LevelModel model, long id)
+        {
+            if (id <= 0) return Json("error");
+
+            try
+            {
+                return Json(_levelManager.Save(model));
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody]LevelModel model)
+        {
+            try
+            {
+                return Json(_levelManager.Save(model));
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(long id)
+        {
+            try
+            {
+                _levelManager.Delete(id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
         }
     }
 }

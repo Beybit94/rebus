@@ -20,9 +20,70 @@ namespace rebus.Web.Controllers
             _rebusManager = rebusManager;
         }
 
-        public ListModel<RebusModel> Get(RebusListQueryModel query)
+        public IActionResult Get(RebusListQueryModel query)
         {
-            return _rebusManager.List(query);
+            try
+            {
+                return Json(_rebusManager.List(query));
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
+        }
+
+        public IActionResult Get(long id)
+        {
+            try
+            {
+                return Json(_rebusManager.Get(id));
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
+        }
+
+        [HttpPut]
+        public IActionResult Edit([FromBody]RebusModel model, long id)
+        {
+            if (id <= 0) return Json("error");
+
+            try
+            {
+                return Json(_rebusManager.Save(model));
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Create([FromBody]RebusModel model)
+        {
+            try
+            {
+                return Json(_rebusManager.Save(model));
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(long id)
+        {
+            try
+            {
+                _rebusManager.Delete(id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return Json("error");
+            }
         }
     }
 }
