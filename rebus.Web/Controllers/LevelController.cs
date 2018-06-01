@@ -25,14 +25,15 @@ namespace rebus.Web.Controllers
         {
             try
             {
-                return Json(_levelManager.List(query));
+                return Json(_levelManager.List(query).Data);
             }
             catch (Exception)
             {
-                return Json("error");
+                return Json(new { error = "error" });
             }
         }
 
+        [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
             try
@@ -41,14 +42,14 @@ namespace rebus.Web.Controllers
             }
             catch (Exception)
             {
-                return Json("error");
+                return Json(new { error = "error" });
             }
         }
 
         [HttpPut]
         public IActionResult Edit([FromBody]LevelModel model, long id)
         {
-            if (id <= 0) return Json("error");
+            if (id <= 0) return Json(new { error = "error" });
 
             try
             {
@@ -56,7 +57,7 @@ namespace rebus.Web.Controllers
             }
             catch (Exception)
             {
-                return Json("error");
+                return Json(new { error = "error" });
             }
         }
 
@@ -69,7 +70,7 @@ namespace rebus.Web.Controllers
             }
             catch (Exception)
             {
-                return Json("error");
+                return Json(new { error = "error" });
             }
         }
 
@@ -83,7 +84,7 @@ namespace rebus.Web.Controllers
             }
             catch (Exception)
             {
-                return Json("error");
+                return Json(new { error = "error" });
             }
         }
     }

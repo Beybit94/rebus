@@ -1,0 +1,30 @@
+﻿<div class="col-md-12">
+    <h3>
+        <a class="btn btn-success pull-right">Add</a>
+        Levels
+    </h3>
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>IsPro</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let l of levels">
+                <td style="width:75%">
+                    {{l.name}}
+                </td>
+                <td>
+                    {{l.isPro}}
+                </td>
+                <td class="text-right">
+                    <a (click)="delete(l.id)">Delete</a> |
+                    <a [routerLink]="['edit', l.id]">Edit</a> |
+                    <a [routerLink]="['detail', l.id]">Detail</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

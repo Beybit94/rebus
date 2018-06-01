@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using rebus.Business.Validation;
 using rebus.Business.Validation.CustomAttributes;
@@ -14,6 +15,7 @@ namespace rebus.Business.Model
         [RequiredObject]
         public bool isPro { get; set; }
 
+        [NotMapped]
         public List<RebusModel> Rebuses { get; set; }
 
         public override ModelValidationResult Validate()

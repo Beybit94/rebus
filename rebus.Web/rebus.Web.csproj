@@ -40,6 +40,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\app\level\level.component.ts" />
+    <None Remove="ClientApp\app\level\service\level.service.ts" />
+    <None Remove="ClientApp\app\model\Level.ts" />
+    <None Remove="ClientApp\app\model\Rebus.ts" />
+    <None Remove="ClientApp\app\rebus\rebus.component.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
     <PackageReference Include="NSwag.AspNetCore" Version="11.17.12" />
   </ItemGroup>
@@ -47,6 +55,14 @@
   <ItemGroup>
     <ProjectReference Include="..\rebus.Business\rebus.Business.csproj" />
     <ProjectReference Include="..\rebus.DAL\rebus.DAL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\level\list\level-list.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\level\service\level.service.ts" />
+    <TypeScriptCompile Include="ClientApp\app\model\Level.ts" />
+    <TypeScriptCompile Include="ClientApp\app\model\Rebus.ts" />
+    <TypeScriptCompile Include="ClientApp\app\rebus\rebus.component.ts" />
   </ItemGroup>
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
