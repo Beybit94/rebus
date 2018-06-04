@@ -22,6 +22,7 @@ namespace rebus.DAL.Repositories
         {
             if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
             var entity = UnitOfWork.Session.QuerySingleOrDefault<Rebus>(@"SELECT TOP 1 * FROM Rebuses WHERE id = @id", new { id });
+            entity.Level = UnitOfWork.Session.QuerySingleOrDefault<Level>($@"SELECT * FROM Levels l where l.id=@levelid", new { levelid = entity.LevelId });
             return entity;
         }
 
@@ -35,6 +36,10 @@ namespace rebus.DAL.Repositories
             var page = listQuery.Page();
 
             var entity = UnitOfWork.Session.Query<Rebus>($@"SELECT * FROM Rebuses r", query).ToList();
+            foreach (var item in entity)
+            {
+                item.Level = UnitOfWork.Session.QuerySingleOrDefault<Level>($@"SELECT * FROM Levels l where l.id=@levelid", new { levelid = item.LevelId });
+            }
 
             return entity;
         }

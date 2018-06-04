@@ -9,33 +9,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-var LevelService = /** @class */ (function () {
-    function LevelService(http) {
+var RebusService = /** @class */ (function () {
+    function RebusService(http) {
         this.http = http;
-        this.url = "api/Level";
+        this.url = "api/Rebus";
     }
-    LevelService.prototype.list = function () {
+    RebusService.prototype.list = function () {
         return this.http.get(this.url, { responseType: 'json' });
     };
-    LevelService.prototype.get = function (id) {
+    RebusService.prototype.get = function (id) {
         return this.http.get(this.url + '/' + id);
     };
-    LevelService.prototype.save = function (level) {
-        if (level.id) {
-            return this.http.put(this.url + '/' + level.id, level);
+    RebusService.prototype.save = function (rebus) {
+        if (rebus.id) {
+            return this.http.put(this.url + '/' + rebus.id, rebus);
         }
         else {
-            return this.http.post(this.url, level);
+            return this.http.post(this.url, rebus);
         }
     };
-    LevelService.prototype.delete = function (id) {
+    RebusService.prototype.delete = function (id) {
         return this.http.delete(this.url + '/' + id);
     };
-    LevelService = __decorate([
+    RebusService = __decorate([
         Injectable(),
         __metadata("design:paramtypes", [HttpClient])
-    ], LevelService);
-    return LevelService;
+    ], RebusService);
+    return RebusService;
 }());
-export { LevelService };
-//# sourceMappingURL=level.service.js.map
+export { RebusService };
+//# sourceMappingURL=rebus.service.js.map

@@ -1,18 +1,18 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Level } from '../../model/Level'
+import { Rebus } from '../../model/Rebus'
 
 @Injectable()
-export class LevelService
+export class RebusService
 {
-    private url = "api/Level";
+    private url = "api/Rebus";
 
     constructor(private http: HttpClient) { }
 
     list()
     {
-        return this.http.get(this.url, { responseType: 'json'});
+        return this.http.get(this.url, { responseType: 'json' });
     }
 
     get(id: number)
@@ -20,14 +20,14 @@ export class LevelService
         return this.http.get(this.url + '/' + id);
     }
 
-    save(level: Level)
+    save(rebus: Rebus)
     {
-        if (level.id)
+        if (rebus.id)
         {
-            return this.http.put(this.url + '/' + level.id, level);
+            return this.http.put(this.url + '/' + rebus.id, rebus);
         } else
         {
-            return this.http.post(this.url, level);
+            return this.http.post(this.url, rebus);
         }
     }
 

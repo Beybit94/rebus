@@ -1,8 +1,11 @@
-﻿export class Rebus
+﻿import { Level } from "./Level";
+
+export class Rebus
 {
     constructor(
-        public ID: number,
-        public Img: string,
-        public Answer: string,
-        public LevelId: number) { }
+        public id: number,
+        public img: string,
+        public answer: string,
+        public levelId: number,
+        public level:Level) { }
 }

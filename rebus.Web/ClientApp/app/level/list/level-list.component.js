@@ -8,17 +8,36 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
+import { Level } from '../../model/Level';
 import { LevelService } from '../service/level.service';
 var LevelListComponent = /** @class */ (function () {
     function LevelListComponent(levelService) {
         this.levelService = levelService;
+        this.item = this.emptyLevel();
     }
     LevelListComponent.prototype.ngOnInit = function () {
         this.load();
     };
     LevelListComponent.prototype.load = function () {
         var _this = this;
-        this.levelService.getLevels().subscribe(function (data) { return _this.levels = data; });
+        this.levelService.list().subscribe(function (data) { return _this.list = data; });
+    };
+    LevelListComponent.prototype.delete = function (id) {
+        var _this = this;
+        this.levelService.delete(id).subscribe(function (data) { return _this.load(); });
+    };
+    LevelListComponent.prototype.save = function (item) {
+        var _this = this;
+        this.levelService.save(item).subscribe(function (data) { return _this.load(); });
+    };
+    LevelListComponent.prototype.select = function (item) {
+        if (item)
+            this.item = item;
+        else
+            this.item = this.emptyLevel();
+    };
+    LevelListComponent.prototype.emptyLevel = function () {
+        return new Level(0, "", false, null);
     };
     LevelListComponent = __decorate([
         Component({

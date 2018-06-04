@@ -9,8 +9,12 @@ import { LevelService } from '../service/level.service';
 })
 export class LevelListComponent implements OnInit
 {
-    levels: Level[];
-    constructor(private levelService: LevelService) { }
+    list: Level[];
+    item: Level;
+    constructor(private service: LevelService)
+    {
+        this.item = this.emptyLevel();
+    }
 
     ngOnInit()
     {
@@ -19,16 +23,27 @@ export class LevelListComponent implements OnInit
 
     load()
     {
-        this.levelService.getLevels().subscribe((data: Level[]) => this.levels = data);
+        this.service.list().subscribe((data: Level[]) => this.list = data);
     }
 
     delete(id: number)
     {
-        this.levelService.deleteLevel(id).subscribe(data => this.load());
+        this.service.delete(id).subscribe(data => this.load());
     }
 
     save(item: Level)
     {
-        this.levelService.saveLevel(item).subscribe(data => this.load());
+        this.service.save(item).subscribe(data => this.load());
+    }
+
+    select(item: Level)
+    {
+        if (item) this.item = item;
+        else this.item = this.emptyLevel();
+    }
+
+    emptyLevel()
+    {
+        return new Level(0, "", false, null);
     }
 }

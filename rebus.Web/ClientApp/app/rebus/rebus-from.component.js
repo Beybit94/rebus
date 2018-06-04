@@ -7,19 +7,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-var RebusComponent = /** @class */ (function () {
-    function RebusComponent(router) {
-        this.router = router;
+import { Component, Input } from '@angular/core';
+import { Rebus } from '../model/rebus';
+var RebusFormComponent = /** @class */ (function () {
+    function RebusFormComponent() {
     }
-    RebusComponent = __decorate([
+    __decorate([
+        Input(),
+        __metadata("design:type", Rebus)
+    ], RebusFormComponent.prototype, "rebus", void 0);
+    RebusFormComponent = __decorate([
         Component({
-            templateUrl: './rebus.component.html'
-        }),
-        __metadata("design:paramtypes", [Router])
-    ], RebusComponent);
-    return RebusComponent;
+            selector: "rebus-form",
+            templateUrl: './rebus-form.component.html'
+        })
+    ], RebusFormComponent);
+    return RebusFormComponent;
 }());
-export { RebusComponent };
-//# sourceMappingURL=rebus.component.js.map
+export { RebusFormComponent };
+//# sourceMappingURL=rebus-from.component.js.map

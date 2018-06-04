@@ -40,11 +40,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\app\level\level-form.component.ts" />
     <None Remove="ClientApp\app\level\level.component.ts" />
     <None Remove="ClientApp\app\level\service\level.service.ts" />
     <None Remove="ClientApp\app\model\Level.ts" />
     <None Remove="ClientApp\app\model\Rebus.ts" />
+    <None Remove="ClientApp\app\rebus\rebus-from.component.ts" />
     <None Remove="ClientApp\app\rebus\rebus.component.ts" />
+    <None Remove="ClientApp\app\rebus\service\rebus.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -58,11 +61,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\level\level-form.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\level\list\level-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\level\service\level.service.ts" />
     <TypeScriptCompile Include="ClientApp\app\model\Level.ts" />
     <TypeScriptCompile Include="ClientApp\app\model\Rebus.ts" />
-    <TypeScriptCompile Include="ClientApp\app\rebus\rebus.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\rebus\list\rebus-list.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\rebus\rebus-from.component.ts" />
+    <TypeScriptCompile Include="ClientApp\app\rebus\service\rebus.service.ts" />
   </ItemGroup>
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">

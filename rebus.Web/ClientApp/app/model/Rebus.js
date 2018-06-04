@@ -1,9 +1,10 @@
 var Rebus = /** @class */ (function () {
-    function Rebus(ID, Img, Answer, LevelId) {
-        this.ID = ID;
-        this.Img = Img;
-        this.Answer = Answer;
-        this.LevelId = LevelId;
+    function Rebus(id, img, answer, levelId, level) {
+        this.id = id;
+        this.img = img;
+        this.answer = answer;
+        this.levelId = levelId;
+        this.level = level;
     }
     return Rebus;
 }());

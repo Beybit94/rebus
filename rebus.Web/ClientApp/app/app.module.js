@@ -12,14 +12,17 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LevelListComponent } from './level/list/level-list.component';
-import { RebusComponent } from './rebus/rebus.component';
+import { LevelFormComponent } from './level/level-form.component';
+import { RebusListComponent } from './rebus/list/rebus-list.component';
+import { RebusFormComponent } from './rebus/rebus-from.component';
 import { NotFoundComponent } from './not-found.component';
 import { LevelService } from './level/service/level.service';
+import { RebusService } from './rebus/service/rebus.service';
 // определение маршрутов
 var appRoutes = [
     { path: '', component: LevelListComponent },
     { path: 'level', component: LevelListComponent },
-    { path: 'rebus', component: RebusComponent },
+    { path: 'rebus', component: RebusListComponent },
     { path: '**', component: NotFoundComponent }
 ];
 var AppModule = /** @class */ (function () {
@@ -32,10 +35,12 @@ var AppModule = /** @class */ (function () {
                 AppComponent,
                 HomeComponent,
                 LevelListComponent,
-                RebusComponent,
+                LevelFormComponent,
+                RebusListComponent,
+                RebusFormComponent,
                 NotFoundComponent
             ],
-            providers: [LevelService],
+            providers: [LevelService, RebusService],
             bootstrap: [AppComponent]
         })
     ], AppModule);

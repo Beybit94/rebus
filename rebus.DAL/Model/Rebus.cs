@@ -12,5 +12,8 @@ namespace rebus.DAL.Model
         public string Answer { get; set; }
 
         public long LevelId { get; set; }
+
+        [NotMapped]
+        public Level Level { get; set; }
     }
 }
