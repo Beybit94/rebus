@@ -11,7 +11,7 @@ using rebus.Business.QueryModels.Level;
 namespace rebus.Web.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Level")]
+    [Route("api/[controller]/[action]")]
     public class LevelController : Controller
     {
         private readonly LevelManager _levelManager;
@@ -21,70 +21,70 @@ namespace rebus.Web.Controllers
             _levelManager = levelManager;
         }
 
-        public IActionResult Get(LevelListQueryModel query)
+        public JsonResult List(LevelListQueryModel query)
         {
             try
             {
                 return Json(_levelManager.List(query).Data);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Json(new { error = "error" });
+                return Json(new { error = ex.Message });
             }
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(long id)
+        public JsonResult Get(long id)
         {
             try
             {
                 return Json(_levelManager.Get(id));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Json(new { error = "error" });
+                return Json(new { error = ex.Message });
             }
         }
 
         [HttpPut]
-        public IActionResult Edit([FromBody]LevelModel model, long id)
+        public JsonResult Edit([FromBody]LevelModel model)
         {
-            if (id <= 0) return Json(new { error = "error" });
+            if (model.ID <= 0) return Json(new { error = "error" });
 
             try
             {
                 return Json(_levelManager.Save(model));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Json(new { error = "error" });
+                return Json(new { error = ex.Message });
             }
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody]LevelModel model)
+        public JsonResult Create([FromBody]LevelModel model)
         {
             try
             {
                 return Json(_levelManager.Save(model));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Json(new { error = "error" });
+                return Json(new { error = ex.Message });
             }
         }
 
-        [HttpDelete]
-        public IActionResult Delete(long id)
+        [HttpDelete("{id}")]
+        public JsonResult Delete(long id)
         {
             try
             {
                 _levelManager.Delete(id);
-                return Ok();
+                return Json(new { success = "success" });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Json(new { error = "error" });
+                return Json(new { error = ex.Message });
             }
         }
     }

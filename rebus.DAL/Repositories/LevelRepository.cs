@@ -55,8 +55,8 @@ namespace rebus.DAL.Repositories
                 try
                 {
                     entity.ID = UnitOfWork.Session.QuerySingleOrDefault<long>(@"
-INSERT INTO Levels ( id, name, isPro )
-VALUES ( @ID, @Name, @IsPro )
+INSERT INTO Levels ( name, isPro )
+VALUES (@Name, @IsPro )
 SELECT SCOPE_IDENTITY()", entity, UnitOfWork.Transaction);
 
                     transaction.Commit();
@@ -82,15 +82,15 @@ SELECT SCOPE_IDENTITY()", entity, UnitOfWork.Transaction);
             UnitOfWork.Session.Execute(@"
 UPDATE Levels
 SET name = @Name, isPro = @IsPro
-WHERE id = @ID", entity, UnitOfWork.Transaction);
+WHERE id = @ID", new { Name = entity.Name, IsPro = entity.IsPro, ID = entity.ID }, UnitOfWork.Transaction);
         }
 
         public override void Delete(long id)
         {
             using (var transaction = UnitOfWork.BeginTransaction())
             {
-                UnitOfWork.Session.Execute(@"DELETE * FROM Rebuses WHERE levelid = @id", new { id }, UnitOfWork.Transaction);
-                UnitOfWork.Session.Execute(@"DELETE * FROM Levels WHERE id = @id", new { id }, UnitOfWork.Transaction);
+                UnitOfWork.Session.Execute(@"DELETE FROM Rebuses WHERE levelid = @id", new { id }, UnitOfWork.Transaction);
+                UnitOfWork.Session.Execute(@"DELETE FROM Levels WHERE id = @id", new { id }, UnitOfWork.Transaction);
 
                 transaction.Commit();
             }

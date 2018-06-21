@@ -11,8 +11,8 @@ import { Component } from '@angular/core';
 import { Level } from '../../model/Level';
 import { LevelService } from '../service/level.service';
 var LevelListComponent = /** @class */ (function () {
-    function LevelListComponent(levelService) {
-        this.levelService = levelService;
+    function LevelListComponent(service) {
+        this.service = service;
         this.item = this.emptyLevel();
     }
     LevelListComponent.prototype.ngOnInit = function () {
@@ -20,15 +20,15 @@ var LevelListComponent = /** @class */ (function () {
     };
     LevelListComponent.prototype.load = function () {
         var _this = this;
-        this.levelService.list().subscribe(function (data) { return _this.list = data; });
+        this.service.list().subscribe(function (data) { return _this.list = data; });
     };
     LevelListComponent.prototype.delete = function (id) {
         var _this = this;
-        this.levelService.delete(id).subscribe(function (data) { return _this.load(); });
+        this.service.delete(id).subscribe(function (data) { return _this.load(); });
     };
     LevelListComponent.prototype.save = function (item) {
         var _this = this;
-        this.levelService.save(item).subscribe(function (data) { return _this.load(); });
+        this.service.save(item).subscribe(function (data) { return _this.load(); });
     };
     LevelListComponent.prototype.select = function (item) {
         if (item)

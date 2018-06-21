@@ -11,7 +11,7 @@ using rebus.Business.QueryModels.Rebus;
 namespace rebus.Web.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Rebus")]
+    [Route("api/[controller]/[action]")]
     public class RebusController : Controller
     {
         private readonly RebusManager _rebusManager;
@@ -20,70 +20,70 @@ namespace rebus.Web.Controllers
             _rebusManager = rebusManager;
         }
 
-        public IActionResult Get(RebusListQueryModel query)
+        public JsonResult List(RebusListQueryModel query)
         {
             try
             {
                 return Json(_rebusManager.List(query).Data);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Json(new { error = "error" });
+                return Json(new { error = ex.Message});
             }
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(long id)
+        public JsonResult Get(long id)
         {
             try
             {
                 return Json(_rebusManager.Get(id));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Json(new { error = "error" });
+                return Json(new { error = ex.Message });
             }
         }
 
         [HttpPut]
-        public IActionResult Edit([FromBody]RebusModel model, long id)
+        public JsonResult Edit([FromBody]RebusModel model)
         {
-            if (id <= 0) return Json(new { error = "error" });
+            if (model.ID <= 0) return Json(new { error = "error" });
 
             try
             {
                 return Json(_rebusManager.Save(model));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Json(new { error = "error" });
+                return Json(new { error = ex.Message });
             }
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody]RebusModel model)
+        public JsonResult Create([FromBody]RebusModel model)
         {
             try
             {
                 return Json(_rebusManager.Save(model));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Json(new { error = "error" });
+                return Json(new { error = ex.Message });
             }
         }
 
-        [HttpDelete]
-        public IActionResult Delete(long id)
+        [HttpDelete("{id}")]
+        public JsonResult Delete(long id)
         {
             try
             {
                 _rebusManager.Delete(id);
-                return Ok();
+                return Json(new { success = "success" });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Json(new { error = "error" });
+                return Json(new { error = ex.Message });
             }
         }
     }

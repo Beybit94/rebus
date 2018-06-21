@@ -10,25 +10,32 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { Rebus } from '../../model/Rebus';
 import { RebusService } from '../service/rebus.service';
+import { LevelService } from '../../level/service/level.service';
 var RebusListComponent = /** @class */ (function () {
-    function RebusListComponent(rebusService) {
-        this.rebusService = rebusService;
+    function RebusListComponent(service, levelService) {
+        this.service = service;
+        this.levelService = levelService;
         this.item = this.emptyRebus();
     }
     RebusListComponent.prototype.ngOnInit = function () {
         this.load();
+        this.loadLevels();
     };
     RebusListComponent.prototype.load = function () {
         var _this = this;
-        this.rebusService.list().subscribe(function (data) { return _this.list = data; });
+        this.service.list().subscribe(function (data) { return _this.list = data; });
+    };
+    RebusListComponent.prototype.loadLevels = function () {
+        var _this = this;
+        this.levelService.list().subscribe(function (data) { return _this.levels = data; });
     };
     RebusListComponent.prototype.delete = function (id) {
         var _this = this;
-        this.rebusService.delete(id).subscribe(function (data) { return _this.load(); });
+        this.service.delete(id).subscribe(function (data) { return _this.load(); });
     };
     RebusListComponent.prototype.save = function (item) {
         var _this = this;
-        this.rebusService.save(item).subscribe(function (data) { return _this.load(); });
+        this.service.save(item).subscribe(function (data) { return _this.load(); });
     };
     RebusListComponent.prototype.select = function (item) {
         if (item)
@@ -43,7 +50,7 @@ var RebusListComponent = /** @class */ (function () {
         Component({
             templateUrl: './rebus-list.component.html'
         }),
-        __metadata("design:paramtypes", [RebusService])
+        __metadata("design:paramtypes", [RebusService, LevelService])
     ], RebusListComponent);
     return RebusListComponent;
 }());

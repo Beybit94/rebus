@@ -19,7 +19,7 @@ var LevelFormComponent = /** @class */ (function () {
     LevelFormComponent = __decorate([
         Component({
             selector: "level-form",
-            templateUrl: './level-form.component.html'
+            template: "<div class=\"form-group\">\n    <label>Name</label>\n    <input type=\"text\" [(ngModel)]=\"level.name\" class=\"form-control\" />\n</div>\n<div class=\"form-group\">\n    <label>Is Pro</label>\n    <input type=\"text\" [(ngModel)]=\"level.isPro\" class=\"form-control\" />\n</div>"
         })
     ], LevelFormComponent);
     return LevelFormComponent;

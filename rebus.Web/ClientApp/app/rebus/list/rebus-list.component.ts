@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 
 import { Rebus } from '../../model/Rebus'
 import { RebusService } from '../service/rebus.service';
+import { LevelService } from '../../level/service/level.service';
+import { Level } from '../../model/Level';
 
 @Component({
     templateUrl: './rebus-list.component.html'
@@ -11,7 +13,9 @@ export class RebusListComponent
 {
     list: Rebus[];
     item: Rebus;
-    constructor(private service: RebusService)
+
+    levels: Level[];
+    constructor(private service: RebusService, private levelService: LevelService)
     {
         this.item = this.emptyRebus();
     }
@@ -19,11 +23,16 @@ export class RebusListComponent
     ngOnInit()
     {
         this.load();
+        this.loadLevels();
     }
 
     load()
     {
         this.service.list().subscribe((data: Rebus[]) => this.list = data);
+    }
+    loadLevels()
+    {
+        this.levelService.list().subscribe((data: Level[]) => this.levels = data);
     }
 
     delete(id: number)

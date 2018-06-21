@@ -12,6 +12,13 @@ import { Rebus } from '../model/rebus';
 var RebusFormComponent = /** @class */ (function () {
     function RebusFormComponent() {
     }
+    RebusFormComponent.prototype.selectLevel = function (value) {
+        this.rebus.levelId = value;
+    };
+    __decorate([
+        Input(),
+        __metadata("design:type", Array)
+    ], RebusFormComponent.prototype, "levels", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Rebus)

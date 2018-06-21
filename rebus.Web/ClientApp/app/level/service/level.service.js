@@ -12,24 +12,24 @@ import { HttpClient } from '@angular/common/http';
 var LevelService = /** @class */ (function () {
     function LevelService(http) {
         this.http = http;
-        this.url = "api/Level";
+        this.url = "api/Level/";
     }
     LevelService.prototype.list = function () {
-        return this.http.get(this.url, { responseType: 'json' });
+        return this.http.get(this.url + 'List/', { responseType: 'json' });
     };
     LevelService.prototype.get = function (id) {
-        return this.http.get(this.url + '/' + id);
+        return this.http.get(this.url + 'Get/' + id, { responseType: 'json' });
     };
     LevelService.prototype.save = function (level) {
-        if (level.id) {
-            return this.http.put(this.url + '/' + level.id, level);
+        if (level.id && level.id != 0) {
+            return this.http.put(this.url + 'Edit/', level, { responseType: 'json' });
         }
         else {
-            return this.http.post(this.url, level);
+            return this.http.post(this.url + 'Create/', level, { responseType: 'json' });
         }
     };
     LevelService.prototype.delete = function (id) {
-        return this.http.delete(this.url + '/' + id);
+        return this.http.delete(this.url + 'Delete/' + id, { responseType: 'json' });
     };
     LevelService = __decorate([
         Injectable(),

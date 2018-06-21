@@ -12,24 +12,24 @@ import { HttpClient } from '@angular/common/http';
 var RebusService = /** @class */ (function () {
     function RebusService(http) {
         this.http = http;
-        this.url = "api/Rebus";
+        this.url = "api/Rebus/";
     }
     RebusService.prototype.list = function () {
-        return this.http.get(this.url, { responseType: 'json' });
+        return this.http.get(this.url + 'List/', { responseType: 'json' });
     };
     RebusService.prototype.get = function (id) {
-        return this.http.get(this.url + '/' + id);
+        return this.http.get(this.url + 'Get/' + id, { responseType: 'json' });
     };
     RebusService.prototype.save = function (rebus) {
-        if (rebus.id) {
-            return this.http.put(this.url + '/' + rebus.id, rebus);
+        if (rebus.id && rebus.id != 0) {
+            return this.http.put(this.url + 'Edit/', rebus, { responseType: 'json' });
         }
         else {
-            return this.http.post(this.url, rebus);
+            return this.http.post(this.url + 'Create/', rebus, { responseType: 'json' });
         }
     };
     RebusService.prototype.delete = function (id) {
-        return this.http.delete(this.url + '/' + id);
+        return this.http.delete(this.url + 'Delete/' + id, { responseType: 'json' });
     };
     RebusService = __decorate([
         Injectable(),
