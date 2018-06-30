@@ -71,6 +71,10 @@
     <TypeScriptCompile Include="ClientApp\app\rebus\service\rebus.service.ts" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\dist\" />
+  </ItemGroup>
+
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec Command="npm install" />

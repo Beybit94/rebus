@@ -8,27 +8,44 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 import { Level } from '../../model/Level';
 import { LevelService } from '../service/level.service';
 var LevelListComponent = /** @class */ (function () {
     function LevelListComponent(service) {
         this.service = service;
+        this.state = "inactive";
         this.item = this.emptyLevel();
     }
     LevelListComponent.prototype.ngOnInit = function () {
         this.load();
     };
+    LevelListComponent.prototype.toggleState = function () {
+        this.state = this.state === 'active' ? 'inactive' : 'active';
+    };
     LevelListComponent.prototype.load = function () {
         var _this = this;
-        this.service.list().subscribe(function (data) { return _this.list = data; });
+        this.toggleState();
+        this.service.list().subscribe(function (data) {
+            _this.list = data;
+            _this.toggleState();
+        });
     };
     LevelListComponent.prototype.delete = function (id) {
         var _this = this;
-        this.service.delete(id).subscribe(function (data) { return _this.load(); });
+        this.toggleState();
+        this.service.delete(id).subscribe(function (data) {
+            _this.load();
+            _this.toggleState();
+        });
     };
     LevelListComponent.prototype.save = function (item) {
         var _this = this;
-        this.service.save(item).subscribe(function (data) { return _this.load(); });
+        this.toggleState();
+        this.service.save(item).subscribe(function (data) {
+            _this.load();
+            _this.toggleState();
+        });
     };
     LevelListComponent.prototype.select = function (item) {
         if (item)
@@ -41,7 +58,21 @@ var LevelListComponent = /** @class */ (function () {
     };
     LevelListComponent = __decorate([
         Component({
-            templateUrl: './level-list.component.html'
+            templateUrl: "./level-list.component.html",
+            animations: [
+                trigger('requestState', [
+                    state('inactive', style({
+                        backgroundColor: '#eee',
+                        transform: 'scale(1)'
+                    })),
+                    state('active', style({
+                        backgroundColor: '#cfd8dc',
+                        transform: 'scale(1.1)'
+                    })),
+                    transition('inactive => active', animate('100ms ease-in')),
+                    transition('active => inactive', animate('100ms ease-out'))
+                ])
+            ]
         }),
         __metadata("design:paramtypes", [LevelService])
     ], LevelListComponent);

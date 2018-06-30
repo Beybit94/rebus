@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Level } from '../../model/Level'
+import { Level } from '../../model/Level';
 
 @Injectable()
 export class LevelService
