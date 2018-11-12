@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
+import { AnimateComponent } from './animate.component';
 import { HomeComponent } from './home/home.component';
 import { LevelListComponent } from './level/list/level-list.component';
 import { LevelFormComponent } from './level/level-form.component';
@@ -34,6 +35,7 @@ var AppModule = /** @class */ (function () {
             imports: [BrowserModule, BrowserAnimationsModule, FormsModule, HttpClientModule, RouterModule.forRoot(appRoutes)],
             declarations: [
                 AppComponent,
+                AnimateComponent,
                 HomeComponent,
                 LevelListComponent,
                 LevelFormComponent,

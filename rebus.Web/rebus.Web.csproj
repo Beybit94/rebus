@@ -40,6 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\app\animate.component.ts" />
     <None Remove="ClientApp\app\level\level-form.component.ts" />
     <None Remove="ClientApp\app\level\level.component.ts" />
     <None Remove="ClientApp\app\level\service\level.service.ts" />
@@ -61,6 +62,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\app\animate.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\level\level-form.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\level\list\level-list.component.ts" />
     <TypeScriptCompile Include="ClientApp\app\level\service\level.service.ts" />

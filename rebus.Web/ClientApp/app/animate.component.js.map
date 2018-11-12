@@ -1,0 +1,1 @@
+{"version":3,"file":"animate.component.js","sourceRoot":"","sources":["animate.component.ts"],"names":[],"mappings":";;;;;;AAAA,OAAO,EAAE,SAAS,EAAE,MAAM,eAAe,CAAC;AAgB1C;IAAA;IAAgC,CAAC;IAApB,gBAAgB;QAd5B,SAAS,CAAC;YACP,QAAQ,EAAE,aAAa;YACvB,QAAQ,EAAE,uCAAqC;YAC/C,MAAM,EAAE,CAAC,0IAQZ,CAAC;SACD,CAAC;OAEW,gBAAgB,CAAI;IAAD,uBAAC;CAAA,AAAjC,IAAiC;SAApB,gBAAgB"}
